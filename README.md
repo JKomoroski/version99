@@ -15,3 +15,9 @@ Build it as follows:
     go build
 
 This service is running on http://version99.grons.nl. However, I encourage you to run this service yourself as bandwidth to my machine is limited.
+
+Often you only need this sevice for just 1 package. In that case you can also download the jar and pom for that package and upload it to your local repository (that is, if you have one).
+
+## Update April 2019
+
+It has been 6 years since the Go version of this service was developed and deployed. Luckily, commons-logging is rarely encountered anymore and this service is less and less necessary. Nonetheless, the service is still running and I have found no reason yet to change that :)
