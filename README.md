@@ -8,7 +8,7 @@ Version 99 Does Not Exist emulates a Maven 2 repository and serves empty jars fo
 
 For example the following links will give an [empty jar](http://version99.grons.nl/mvn2/commons-logging/commons-logging/99.0-does-not-exist/commons-logging-99.0-does-not-exist.jar), its [pom](http://version99.grons.nl/mvn2/commons-logging/commons-logging/99.0-does-not-exist/commons-logging-99.0-does-not-exist.pom) for commons-logging.</p>
 
-My [original Ruby/Camping application](https://github.com/erikvanoosten/version99/blob/master/version99.rb) was ported to Go by my colleague Frank Schroeders.
+The [original Ruby/Camping application](https://github.com/erikvanoosten/version99/blob/master/version99.rb) was ported to Go by my colleague Frank Schroeders.
 
 Build it as follows:
 
