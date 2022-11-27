@@ -8,7 +8,7 @@ import (
 
 const (
 	INFO_URL    = "http://day-to-day-stuff.blogspot.com/2007/10/announcement-version-99-does-not-exist.html"
-	FAVICON_ICO = "AAABAAEAEBAQAAAAAAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAD/AAAA////AAAA/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABEREQERERAAAAARAAABEAAREREBEREQABEAEQEQARAAERERAREREAAAAAAAAAAAAAAAAAAAAAACIiIiIiIiIiIiIiIiIiIiIiIiIhEiIiIiIiIhERIiIiIiIhEiESIiIiIiESIRIiIiIiIiIiIiIiIiIiIiIiIiIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+	FAVICON_PNG = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAOElEQVR4AWP4z0AaolwDGCCzKdeAiZAA0X4AA5p4mjCiix3/MQEOQTDCEfSYguTbQDgCKLeBJAQA5cd6lDERP0gAAAAASUVORK5CYII="
 	EMPTY_JAR   = "UEsDBAoAAAAAAME+SDiyfwLuGQAAABkAAAAUAAQATUVUQS1JTkYvTUFOSUZFU1QuTUb+ygAATWFuaWZlc3QtVmVyc2lvbjogMS4wDQoNClBLAQIKAAoAAAAAAME+SDiyfwLuGQAAABkAAAAUAAQAAAAAAAAAAAAAAAAAAABNRVRBLUlORi9NQU5JRkVTVC5NRv7KAABQSwUGAAAAAAEAAQBGAAAATwAAAAAA"
 
 	POM_XML = `<?xml version="1.0" encoding="iso-8859-1"?>
@@ -19,7 +19,8 @@ const (
 	<name>{{.Name}}</name>
 	<version>99.0-does-not-exist</version>
 	<description>
-		This is a generated pom. Version 99.0-does-not-exist is a dummy implementation with actually does nothing and has no dependencies. 
+		This is a generated pom.
+		Version 99.0-does-not-exist is a dummy implementation which actually does nothing and has no dependencies. 
 		VERSION 99.0-does-not-exist IS NOT IN ANY WAY AFFILIATED WITH THE ORIGINAL DEVELOPERS of {{.GroupId}}.
 	</description>
 	<url>{{.InfoURL}}</url>
@@ -28,9 +29,16 @@ const (
 	INDEX_HTML = `<html>
 <head>
 <title>Version 99 Does Not Exist</title>
+<style>
+html { font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif; }
+body { padding: 5px; max-width: 550px; }
+h1 { font-size: 120%; }
+img { width:1em; height:1em; position:relative; top:2px; }
+</style>
+<link rel="icon" href="/favicon.png" type="image/png">
 </head>
 <body>
-<h1>Version 99 Does Not Exist</h1>
+<h1><img src="/favicon.png"> Version 99 Does Not Exist</h1>
 <p>Please see <a href="http://day-to-day-stuff.blogspot.com/2007/10/announcement-version-99-does-not-exist.html">my blog</a> to read why I created Version 99 Does Not Exist and its predecessor no-commons-logging.</p>
 <p>Version 99 Does Not Exist emulates a Maven 2 repository and serves empty jars for any valid package that has version number <i>99.0-does-not-exist</i>. It also generates poms, <span style="text-decoration: line-through">metadata files</span> (removed since 2.0) and of course the appropriate hashes.</p>
 <p>For example the following links will give an <a href="http://version99.grons.nl/mvn2/commons-logging/commons-logging/99.0-does-not-exist/commons-logging-99.0-does-not-exist.jar">empty jar</a>, its <a href="http://version99.grons.nl/mvn2/commons-logging/commons-logging/99.0-does-not-exist/commons-logging-99.0-does-not-exist.pom">pom</a> and the <a href="http://version99.grons.nl/mvn2/commons-logging/commons-logging/maven-metadata.xml"><span style="text-decoration: line-through">maven metadata</span></a> for commons-logging.</p>
@@ -39,9 +47,20 @@ const (
 </html>`
 
 	NOT_FOUND_HTML = `<html>
+<head>
+<title>Version 99 Does Not Exist</title>
+<style>
+html { font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif; }
+body { padding: 5px; max-width: 550px; }
+h1 { font-size: 120%;  }
+h1 > a { text-decoration: inherit; color: inherit; }
+img { width:1em; height:1em; position:relative; top:2px; }
+</style>
+<link rel="icon" href="/favicon.png" type="image/png">
+</head>
 <body>
-<h1>Version 99 Does Not Exist (Error 404)</h1>
-<h2>Not Found: {{.URL}}</h2>
+<h1><a href="/"><img src="/favicon.png"> Version 99 Does Not Exist - Error 404</a></h1>
+<h2>404 Not Found: {{.URL}}</h2>
 <p>
 <a href="{{.InfoURL}}">Version 99 Does Not Exist</a> is a virtual Maven2 repository. 
 It generates jars and poms for any artifact with version <tt>99.0-does-not-exist</tt>.
@@ -74,7 +93,7 @@ var (
 	notFoundTemplate = template.Must(template.New("notFound").Parse(NOT_FOUND_HTML))
 	pomTemplate      = template.Must(template.New("pom").Parse(POM_XML))
 	emptyJar         = mustBase64Decode(EMPTY_JAR)
-	favicon          = mustBase64Decode(FAVICON_ICO)
+	favicon          = mustBase64Decode(FAVICON_PNG)
 )
 
 // --------------------------------------------------------------------
@@ -90,8 +109,8 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if r.RequestURI == "/favicon.ico" {
-		sendOK(favicon, "image/x-icon", w, r)
+	if r.RequestURI == "/favicon.png" {
+		sendOK(favicon, "image/png", w, r)
 		return
 	}
 
@@ -131,3 +150,4 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 	sendNotFound(w, r)
 }
+
