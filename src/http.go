@@ -99,8 +99,15 @@ var (
 // --------------------------------------------------------------------
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	if r.Method != "GET" {
-		sendStatus(http.StatusBadRequest, w, r)
+
+	if r.Method != "GET" && r.Method != "HEAD" {
+		sendStatus(http.StatusMethodNotAllowed, w, r)
+		return
+	}
+
+	// Handle HEAD request
+	if r.Method == "HEAD" {
+		sendStatus(http.StatusOK, w, r)
 		return
 	}
 
@@ -150,4 +157,3 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 	sendNotFound(w, r)
 }
-
