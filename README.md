@@ -23,7 +23,7 @@ Build and run it in a modern Docker as follows:
 
 This service is running on http://version99.grons.nl. However, I encourage you to run this service yourself as bandwidth to my machine is limited.
 
-Often you only need this sevice for just 1 package. In that case you can also download the jar and pom for that package and upload it to your local repository (that is, if you have one).
+Often you only need this service for just 1 package. In that case you can also download the jar and pom for that package and upload it to your local repository (that is, if you have one).
 
 ## Update April 2019
 
