@@ -10,6 +10,7 @@ import (
 	"log"
 	"net/http"
 	"regexp"
+	"strings"
 )
 
 // --------------------------------------------------------------------
@@ -34,7 +35,7 @@ func matchMavenURI(uri string) *maven {
 		return nil
 	}
 
-	return &maven{GroupId: m[1], ArtifactId: m[2], Name: m[3], Ext: m[4], Digest: m[6], InfoURL: INFO_URL}
+	return &maven{GroupId: strings.ReplaceAll(m[1], "/", "."), ArtifactId: m[2], Name: m[3], Ext: m[4], Digest: m[6], InfoURL: INFO_URL}
 }
 
 // --------------------------------------------------------------------
